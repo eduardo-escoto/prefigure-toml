@@ -1,0 +1,40 @@
+[project]
+name = "prefigure-toml"
+version = "0.1.0"
+description = """\
+    Run configuration management utils: combines configparser, argparse,\
+    and wandb.API, specified with a TOML Config.\
+    """
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    'Development Status :: 1 - Planning',
+    'Intended Audience :: Science/Research',
+    'License :: OSI Approved :: MIT License',
+    'Operating System :: POSIX :: Linux',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+]
+
+dependencies = ["argparse>=1.4.0", "configparser>=7.1.0"]
+
+[project.urls]
+github = "https://github.com/eduardo-escoto/prefigure-toml"
+documentation = "https://github.com/eduardo-escoto/prefigure-toml"
+
+[[project.authors]]
+name = "Scott H. Hawley"
+email = "scott.hawley@belmont.edu"
+
+[[project.authors]]
+name = "E. Escoto"
+email = "e1escoto@ucsd.edu"
+
+
+[tool.ruff.lint]
+ignore=["E402"]

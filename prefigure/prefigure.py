@@ -1,21 +1,23 @@
 # -*- coding: utf-8 -*-
-__author__ = 'S.H. Hawley'
+__author__ = 'S.H. Hawley, E. Escoto'
 
 """
 Routines for easily keeping track of & archiving run configurations.
-Supports config (.ini) files, pulling previous configs from WandB, 
+Supports config (.TOML) files, pulling previous configs from WandB, 
 and overrides with command-line options.
 """
 
-from pathlib import Path
-from ast import literal_eval 
 import argparse
 import configparser
-import wandb
-import sys
 import copy
-import distutils
+
+# import distutils
 import json
+import sys
+from ast import literal_eval
+from pathlib import Path
+
+# import wandb
 
 DEFAULTS_FILE = 'defaults.ini'  # override via --config-file
 
@@ -27,31 +29,34 @@ def arg_eval(value):
         val = value
     return val
 
-def setup_gin(gin_file):
-    "called by read_defaults"
-    import gin
-    gin.parse_config_file(gin_file)
-    return {}, '' # read_defaults is expected to return two things
+# def setup_gin(gin_file):
+#     "called by read_defaults"
+#     import gin
+#     gin.parse_config_file(gin_file)
+#     return {}, '' # read_defaults is expected to return two things
 
 
 
 def read_config(config_file):
     "read a config file, setup config dict"
     suffix = Path(config_file).suffix
-    if '.gin' == suffix:  # "full gin compatibility" = ignore all other prefigure code ;-)
-        print(f"prefigure: Switching to gin mode for config file {config_file}")
-        config, config_text = setup_gin(config_file)
-    elif '.json' == suffix:  # if the config file itself is a json file
-        with open(config_file) as f:
-            config = json.load(f)
-        config_text = ''
-    elif '.ini' == suffix: 
-        configp = configparser.ConfigParser()
-        configp.optionxform = str                 # don't change uppercase to lowercase
-        configp.read(config_file)
-        config, config_text = dict(configp.items('DEFAULTS')), ''
-        with open(config_file) as f:
-            config_text = f.readlines()
+    # if '.gin' == suffix:  # "full gin compatibility" = ignore all other prefigure code ;-)
+    #     print(f"prefigure: Switching to gin mode for config file {config_file}")
+    #     config, config_text = setup_gin(config_file)
+    # if '.json' == suffix:  # if the config file itself is a json file
+    #     with open(config_file) as f:
+    #         config = json.load(f)
+    #     config_text = ''
+    # elif '.ini' == suffix: 
+    #     configp = configparser.ConfigParser()
+    #     configp.optionxform = str                 # don't change uppercase to lowercase
+    #     configp.read(config_file)
+    #     config, config_text = dict(configp.items('DEFAULTS')), ''
+    #     with open(config_file) as f:
+    #         config_text = f.readlines()
+    if suffix == ".toml":
+        # do toml things.
+        pass
     else:
         print (f"ERROR: Unknown config file extension: {suffix}.")
         raise ValueError()
@@ -70,14 +75,14 @@ def read_defaults(defaults_file=DEFAULTS_FILE):
     "read the defaults (config) file, setup defaults dict"
     p = argparse.ArgumentParser(add_help=False)
     p.add_argument('--config-file', required=False, default=defaults_file,
-        help='name of local configuration (.ini) file')
+        help='name of local configuration (.toml) file')
     config_file = p.parse_known_args()[0].config_file
     try:
         defaults, defaults_text = read_config(config_file)
     except Exception as e:
         p = BareParser()
         p.add_argument('--config-file', required=False, default=defaults_file,
-            help='name of local configuration (.ini) file')
+            help='name of local configuration (.toml) file')
         args=p.parse_args()
         p.error(e,f"Trouble reading {config_file}")
         sys.exit(1)
@@ -192,5 +197,5 @@ def get_all_args(defaults_file=DEFAULTS_FILE):
 
 if __name__ == '__main__':
     # quick test
-    args = get_all_args(defaults_file='defaults.ini')#../examples/defaults.ini')
+    args = get_all_args(defaults_file='defaults.toml')
     print("args = ",args)

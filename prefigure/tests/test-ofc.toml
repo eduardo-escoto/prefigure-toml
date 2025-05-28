@@ -1,8 +1,9 @@
-[STEERABLES]
-config_file = defaults.ini
-wandb_config = None
-training_dir = ~/datasets/SignalTrain_LA2A_Dataset_1.1
-name = test
+[steerables]
+config_file = "defaults.ini"
+# Note TOML doesn't specify nulls, if you want it to be none, comment out the key.
+# wandb_config = None
+training_dir = "~/datasets/SignalTrain_LA2A_Dataset_1.1"
+name = "test"
 batch_size = 8
 num_gpus = 12
 num_workers = 12
@@ -18,7 +19,6 @@ ema_decay = 0.995
 latent_dim = 32
 codebook_size = 1024
 num_quantizers = 16
-cache_training_data = False
+cache_training_data = false
 check_ofc_every = 1000
 ratios = [4, 4, 2, 6, 2]
-
