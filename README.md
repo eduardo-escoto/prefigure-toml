@@ -1,3 +1,25 @@
+# Deviations from the original:
+
+My direction for this project is to deviate pretty heavily from prefigure. Additionally, most of the code I've written
+deviates pretty heavily from the original prefigure, so I will probably start this package from scratch -- while citing prefigure
+as its progenitor. 
+
+I want this to differ in the following senses:
+- More general use than focusing on ML workloads
+    - Although I'll probably include some convenience methods for different loggers and things like lightning
+ - More opinionated and flexible
+    - Specifically in how the configuration can be specified.
+        - Explicit mode where one can set the arg options key and the superceding key will become the argument
+        - Implicit mode where one just defines a key and the argparsing is inferred, and help gathered from the comment.
+            - May add comment syntax for specifying parsing config.
+- More configurable -- parent object where parsing methods can be customized
+    - Flag generation methods
+    - Specifying package reserved keys so that the user can use their own spec.
+- Include configuration for also specifying the program level information and not just args.
+- Maybe support other things in the argparse library, like argument groups?
+- Have some useful Templatess
+- Probably won't support steerables, but will think about it.
+
 # prefigure
 
 > Run-configuration management utils: combines configparser, argparse, and wandb.API
