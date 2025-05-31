@@ -1,14 +1,24 @@
 [logging]
-# Name of the run
-name = ''
 
-# Name of the project
-project = 'hyperencoder'
+[logging.name.arg_options] 
+default='Example Run'
+help='Name of the run. Used for logging.'
+flags=['--name', '-n']
+
+[logging.project.arg_options]
+default = 'Example Project'
+help = "Name of the project. Used for logging."
+flags=['--project', '-p']
 
 [logging.wandb]
-# You can specify a run-id if you would like wandb to continue logging from that checkpoint.
-run_id = ''
-ckpt_name = ''
+
+[logging.wandb.run_id.arg_options]
+default='Example Run'
+help='You can specify a run-id if you would like wandb to continue logging from that checkpoint.'
+flags=['--project', '-p']
+
+[logging.wandb.ckpt_name.arg_options]
+default='example_ckpt'
 
 
 [training]
@@ -21,15 +31,18 @@ batch_size = 256
 # Precision to use for training
 precision = "16-mixed"
 
-# Multi-GPU strategy for PyTorch Lightning
+# Multi-GPU strategy for PyTorch Lightning, should be a #
 strategy = "auto"
 
 # Directory to save checkpoints and assorted model files in
 save_dir = '/home/eduardo/Projects/pre_encode_audio/data/hyperencoder_training'
 
 [validation]
-# Number of steps between validation runs
+# Number of steps between validation runs.
+# Epochs in this case
 val_every = -1
+
+# random comment
 
 [checkpointing]
 # Save top K model checkpoints during training.
@@ -39,6 +52,7 @@ checkpoint_every = 1
 
 [dataloaders]
 num_workers = 8
+# Workers for the dataloader
 persistent_workers = false
 
 [recovery]

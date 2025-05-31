@@ -8,18 +8,16 @@ and overrides with command-line options.
 """
 
 import argparse
-import configparser
 import copy
+from tomllib import load as toml_load
 
-# import distutils
-import json
 import sys
 from ast import literal_eval
 from pathlib import Path
 
 # import wandb
 
-DEFAULTS_FILE = 'defaults.ini'  # override via --config-file
+DEFAULTS_FILE = 'defaults.toml'  # override via --config-file
 
 def arg_eval(value):
     "this just packages some type checking for parsing args"
@@ -29,34 +27,15 @@ def arg_eval(value):
         val = value
     return val
 
-# def setup_gin(gin_file):
-#     "called by read_defaults"
-#     import gin
-#     gin.parse_config_file(gin_file)
-#     return {}, '' # read_defaults is expected to return two things
-
-
 
 def read_config(config_file):
     "read a config file, setup config dict"
     suffix = Path(config_file).suffix
-    # if '.gin' == suffix:  # "full gin compatibility" = ignore all other prefigure code ;-)
-    #     print(f"prefigure: Switching to gin mode for config file {config_file}")
-    #     config, config_text = setup_gin(config_file)
-    # if '.json' == suffix:  # if the config file itself is a json file
-    #     with open(config_file) as f:
-    #         config = json.load(f)
-    #     config_text = ''
-    # elif '.ini' == suffix: 
-    #     configp = configparser.ConfigParser()
-    #     configp.optionxform = str                 # don't change uppercase to lowercase
-    #     configp.read(config_file)
-    #     config, config_text = dict(configp.items('DEFAULTS')), ''
-    #     with open(config_file) as f:
-    #         config_text = f.readlines()
     if suffix == ".toml":
         # do toml things.
-        pass
+        with(config_file, "rb") as toml_file:
+            config = toml_load(toml_file)
+            config_text = ''
     else:
         print (f"ERROR: Unknown config file extension: {suffix}.")
         raise ValueError()
