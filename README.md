@@ -18,7 +18,11 @@ I want this to differ in the following senses:
 - Include configuration for also specifying the program level information and not just args.
 - Maybe support other things in the argparse library, like argument groups?
 - Have some useful Templatess
+- A difference between parser defaults and provided defaults.
+- An eject button to have the module generate a python script or snippet to generate the argparse configuration for use without the module.
 - Probably won't support steerables, but will think about it.
+- Most importantly, I think what should be best is the ability to specify the schema and defaults (or overrides) separately.
+
 
 # prefigure
 
